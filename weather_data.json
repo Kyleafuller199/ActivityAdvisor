@@ -1,0 +1,8 @@
+{
+    "conditions": {
+        "Sunny": ["Hiking", "Picnics", "Outdoor sports"],
+        "Rain": ["Watching movies", "Cooking", "Reading"],
+        "Snow": ["Skiing", "Building a snowman", "Drinking hot chocolate"],
+        "Cloudy": ["Walking in the park", "Photography", "Board games"]
+    }
+}
