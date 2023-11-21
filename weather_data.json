@@ -1,8 +1,11 @@
 {
     "conditions": {
-        "Sunny": ["Hiking", "Picnics", "Outdoor sports"],
-        "Rain": ["Watching movies", "Cooking", "Reading"],
+        "Thunderstorms": ["Stay indoors", "Read a book", "Watch movies"],
+        "Rainy": ["Cooking", "Board games", "Art and craft"],
         "Snow": ["Skiing", "Building a snowman", "Drinking hot chocolate"],
-        "Cloudy": ["Walking in the park", "Photography", "Board games"]
+        "Cloudy": ["Photography", "Indoor exercises", "Gardening"],
+        "Sunny": ["Hiking", "Picnics", "Outdoor sports"],
+        "Clear": ["Stargazing", "Outdoor yoga", "Nature walks"],
+        "Foggy": ["Take a scenic drive", "Visit a museum", "Listen to music"]
     }
 }
