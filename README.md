@@ -31,8 +31,11 @@ This application is designed to provide activity recommendations based on the fo
 ## Notes
 - This application currently simulates weather conditions and uses a placeholder Lambda function URL for demonstration purposes. Adjustments will be needed to integrate with a live weather API and a functional Lambda service for accurate data.
 - Ensure to handle error scenarios gracefully, considering situations where the Lambda function may not return expected data or in case of network failures.
+- 
+![UML](https://github.com/Kyleafuller199/ActivityAdvisor/assets/84044421/5bcd19e4-b472-4a49-b5c8-43020dcc7f36)
 
 ![Test1](https://github.com/Kyleafuller199/ActivityAdvisor/assets/84044421/970495d7-3474-4fe5-b58f-58f1e763b51a)
+
 ![Test2](https://github.com/Kyleafuller199/ActivityAdvisor/assets/84044421/f1a8ea69-98c1-439f-a1f9-2d39b790e06d)
 
 
