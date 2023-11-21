@@ -13,9 +13,13 @@
 
     <h2>Recommended Activities</h2>
     <ul>
-        {% for activity in data.activities %}
-            <li>{{ activity }}</li>
-        {% endfor %}
+        {% if data.activities %}
+            {% for activity in data.activities %}
+                <li>{{ activity }}</li>
+            {% endfor %}
+        {% else %}
+            <li>No activities found for this weather condition.</li>
+        {% endif %}
     </ul>
 
     <form action="/" method="get">
