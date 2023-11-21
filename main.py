@@ -1,11 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 import random
-import json
+import requests
 
 app = Flask(__name__)
-
-with open('weather_data.json') as json_file:
-    activities = json.load(json_file)
 
 @app.route('/')
 def index():
@@ -15,14 +12,22 @@ def index():
 def get_weather():
     input_date = request.form['date']
     input_time = request.form['time']
-
     input_zip_code = request.form['zip_code']
 
-    weather_conditions = list(activities['conditions'].keys())
+    # Simulate fetching weather conditions randomly (replace this with actual weather data retrieval)
+    weather_conditions = ['Sunny', 'Rain', 'Snow', 'Cloudy']
     weather_condition = random.choice(weather_conditions)
     temperature = str(random.randint(60, 100))
 
-    recommended_activities = activities['conditions'].get(weather_condition, [])
+    # Make a request to the Lambda function
+    lambda_endpoint = "https://1ha9lsdel6.execute-api.us-east-2.amazonaws.com/Test/activity_advisor"
+    lambda_response = requests.get(lambda_endpoint, params={'condition': weather_condition})
+
+    if lambda_response.status_code == 200:
+        lambda_data = lambda_response.json()
+        recommended_activities = lambda_data.get('activities', [])
+    else:
+        recommended_activities = []
 
     response = {
         "date": input_date,
