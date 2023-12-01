@@ -1,15 +1,17 @@
 import json
 
 def lambda_handler(event, context):
-    city_state = event['queryStringParameters'].get('city_state', '')
+    city = event['queryStringParameters'].get('city', '')
+    state = event['queryStringParameters'].get('state', '')
     date = event['queryStringParameters'].get('date', '')
     time = event['queryStringParameters'].get('time', '')
     short_weather = event['queryStringParameters'].get('short_weather', '')
 
     activities = []
-    short_weather = ""
+
     if "Thunderstorms" in short_weather:
         short_weather = "Thunderstorms"
+        activities = ["Stay indoors", "Watch a movie", "Read a book"]
     elif "Rain" in short_weather or "Showers" in short_weather:
         short_weather = "Rainy"
         activities = ["Watching movies", "Cooking", "Reading"]
@@ -38,7 +40,8 @@ def lambda_handler(event, context):
             'Content-Type': 'application/json'
         },
         'body': json.dumps({
-            "city_state": city_state,
+            "city": city,
+            "state": state,
             "date": date,
             "time": time,
             "short_weather": short_weather,
