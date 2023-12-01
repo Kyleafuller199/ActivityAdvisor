@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 import requests
 
 app = Flask(__name__)
@@ -18,15 +18,12 @@ def get_weather():
 
     # Make a request to your partner's weather service to get the weather condition
     partner_weather_endpoint = "https://qnag8pg924.execute-api.us-east-2.amazonaws.com/v1/IdealConditions"
-    partner_weather_response = requests.get(partner_weather_endpoint, params={'location': f"{input_city},{input_state}"})
+    partner_weather_response = requests.get(partner_weather_endpoint,
+                                            params={'location': f"{input_city},{input_state}"})
 
     if partner_weather_response.status_code == 200:
         partner_weather_data = partner_weather_response.json()
-        weather_condition = partner_weather_data.get('short_weather', '')  # Use the weather condition received from partner's Lambda
-
-    if partner_weather_response.status_code == 200:
-        partner_weather_data = partner_weather_response.json()
-        short_weather = partner_weather_data.get('short_weather', {}).get('short_weather', '')
+        weather_condition = partner_weather_data.get('short_weather', '')
 
         # Make a request to your Lambda function
         lambda_endpoint = "https://1ha9lsdel6.execute-api.us-east-2.amazonaws.com/Test/activity_advisor"
@@ -35,17 +32,19 @@ def get_weather():
         if lambda_response.status_code == 200:
             lambda_data = lambda_response.json()
             recommended_activities = lambda_data.get('activities', [])
+
+            response = {
+                "date": input_date,
+                "time": input_time,
+                "weather": weather_condition,
+                "activities": recommended_activities
+            }
+
+            return render_template('display.html', data=response)
         else:
-            recommended_activities = []
-
-        response = {
-            "date": input_date,
-            "time": input_time,
-            "weather": weather_condition,
-            "activities": recommended_activities
-        }
-
-        return render_template('display.html', data=response)
+            # Handle error when fetching activities from Lambda
+            error_response = "Failed to retrieve activities from Lambda."
+            return render_template('error.html', error=error_response)
     else:
         # Handle error when fetching weather condition from partner's service
         error_response = "Failed to retrieve weather condition from partner's service."
