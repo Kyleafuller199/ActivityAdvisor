@@ -9,19 +9,19 @@ def lambda_handler(event, context):
     weather = event.get('weather', '').lower()
     activities = []
 
-    if "thunderstorms" in weather:
+    if "Thunderstorms" in weather:
         activities = ["Stay indoors", "Watch a movie", "Read a book"]
-    elif "rain" in weather or "showers" in weather:
+    elif "Rainy" in weather or "Showers" in weather:
         activities = ["Watching movies", "Cooking", "Reading"]
-    elif "snow" in weather:
+    elif "Snow" in weather:
         activities = ["Skiing", "Building a snowman", "Drinking hot chocolate"]
-    elif "cloudy" in weather:
+    elif "Cloudy" in weather:
         activities = ["Walking in the park", "Photography", "Board games"]
-    elif "sunny" in weather:
+    elif "Sunny" in weather:
         activities = ["Hiking", "Picnics", "Outdoor sports"]
-    elif "clear" in weather:
+    elif "Clear" in weather:
         activities = ["Stargazing", "Outdoor activities", "Barbecue"]
-    elif "fog" in weather:
+    elif "Fog" in weather:
         activities = ["Take a walk", "Enjoy a hot drink", "Relax"]
 
     if not activities:

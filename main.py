@@ -44,7 +44,7 @@ def get_weather():
                 response = {
                     "date": lambda_data.get('date', ''),
                     "time": lambda_data.get('time', ''),
-                    "weather": lambda_data.get('short_weather', ''),
+                    "weather": lambda_data.get('weather', ''),
                     "activities": lambda_data.get('activities', [])
                 }
                 return render_template('display.html', data=response)
