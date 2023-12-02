@@ -1,34 +1,27 @@
 import json
 
 def lambda_handler(event, context):
-    city = event['queryStringParameters'].get('city', '')
-    state = event['queryStringParameters'].get('state', '')
-    date = event['queryStringParameters'].get('date', '')
-    time = event['queryStringParameters'].get('time', '')
-    short_weather = event['queryStringParameters'].get('short_weather', '')
+    city = event.get('city', '')
+    state = event.get('state', '')
+    date = event.get('date', '')
+    time = event.get('time', '')
 
+    weather = event.get('weather', '').lower()
     activities = []
 
-    if "Thunderstorms" in short_weather:
-        short_weather = "Thunderstorms"
+    if "thunderstorms" in weather:
         activities = ["Stay indoors", "Watch a movie", "Read a book"]
-    elif "Rain" in short_weather or "Showers" in short_weather:
-        short_weather = "Rainy"
+    elif "rain" in weather or "showers" in weather:
         activities = ["Watching movies", "Cooking", "Reading"]
-    elif "Snow" in short_weather:
-        short_weather = "Snow"
+    elif "snow" in weather:
         activities = ["Skiing", "Building a snowman", "Drinking hot chocolate"]
-    elif "Cloudy" in short_weather:
-        short_weather = "Cloudy"
+    elif "cloudy" in weather:
         activities = ["Walking in the park", "Photography", "Board games"]
-    elif "Sunny" in short_weather:
-        short_weather = "Sunny"
+    elif "sunny" in weather:
         activities = ["Hiking", "Picnics", "Outdoor sports"]
-    elif "Clear" in short_weather:
-        short_weather = "Clear"
+    elif "clear" in weather:
         activities = ["Stargazing", "Outdoor activities", "Barbecue"]
-    elif "Fog" in short_weather:
-        short_weather = "Foggy"
+    elif "fog" in weather:
         activities = ["Take a walk", "Enjoy a hot drink", "Relax"]
 
     if not activities:
@@ -36,15 +29,15 @@ def lambda_handler(event, context):
 
     return {
         'statusCode': 200,
-        'headers': {
-            'Content-Type': 'application/json'
-        },
         'body': json.dumps({
             "city": city,
             "state": state,
             "date": date,
             "time": time,
-            "short_weather": short_weather,
+            "short_weather": event.get('weather', ''),
             "activities": activities
-        })
+        }),
+        'headers': {
+            'Content-Type': 'application/json'
+        }
     }
