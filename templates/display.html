@@ -2,14 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Details</title>
+    <style>
+    </style>
 </head>
 <body>
     <h1>Weather Details</h1>
-    <p>City: {{ city }}</p>
-    <p>State: {{ state }}</p>
-    <p>Date: {{ date }}</p>
-    <p>Time: {{ time }}</p>
-    <p>Short Weather: {{ short_weather }}</p>
+    <p>City: {{ data.city }}</p>
+    <p>State: {{ data.state }}</p>
+    <p>Date: {{ data.date }}</p>
+    <p>Time: {{ data.time }}</p>
+    <p>Short Weather: {{ data.weather }}</p>
+
+    <h2>Recommended Activities</h2>
+    <ul>
+        {% for activity in data.activities %}
+            <li>{{ activity }}</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
