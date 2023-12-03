@@ -5,9 +5,15 @@
 </head>
 <body>
     <h1>Enter Location</h1>
-    <form action="/get_weather" method="POST">
-        <input type="text" name="location" placeholder="Enter location">
+    <form action="/get_weather" method="post">
+        <label for="location">Enter Location:</label>
+        <input type="text" id="location" name="location" required>
         <button type="submit">Get Weather</button>
     </form>
+
+    <!-- About Me section -->
+    <h2>About Me</h2>
+    <p>This application provides weather information based on the user's location. Enter your location in the form above to get the current weather conditions, including activities suited for the weather.</p>
+    <p>Developed by Kyle Fuller.</p>
 </body>
 </html>
