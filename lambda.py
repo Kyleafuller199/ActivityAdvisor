@@ -1,43 +1,56 @@
 import json
+from urllib import request
+
 
 def lambda_handler(event, context):
-    city = event.get('city', '')
-    state = event.get('state', '')
-    date = event.get('date', '')
-    time = event.get('time', '')
+    # Extract the 'location' parameter from the query string
+    location = event['queryStringParameters'].get('location', '')
 
-    weather = event.get('weather', '').lower()
+    # Make an HTTP GET request to retrieve weather data
+    with request.urlopen(
+            "https://qnag8pg924.execute-api.us-east-2.amazonaws.com/v1/IdealConditions?location=" + location) as weather_response:
+        forecast_content = weather_response.read().decode('utf-8')
+        forecast_json = json.loads(forecast_content)
+
+    # Extract necessary information from the received JSON response
+    current_weather = forecast_json["forecast"]["0"]["weather"]
+    city = forecast_json["information"]["city"]
+    state = forecast_json["information"]["state"]
+    date = forecast_json["forecast"]["0"]["date"]
+    time = forecast_json["forecast"]["0"]["time"]
+
     activities = []
-
-    if "Thunderstorms" in weather:
+    if "Thunderstorms" in current_weather:
         activities = ["Stay indoors", "Watch a movie", "Read a book"]
-    elif "Rainy" in weather or "Showers" in weather:
+    elif "Rainy" in current_weather or "Showers" in current_weather:
         activities = ["Watching movies", "Cooking", "Reading"]
-    elif "Snow" in weather:
+    elif "Snow" in current_weather:
         activities = ["Skiing", "Building a snowman", "Drinking hot chocolate"]
-    elif "Cloudy" in weather:
+    elif "Cloudy" in current_weather:
         activities = ["Walking in the park", "Photography", "Board games"]
-    elif "Sunny" in weather:
+    elif "Sunny" in current_weather:
         activities = ["Hiking", "Picnics", "Outdoor sports"]
-    elif "Clear" in weather:
+    elif "Clear" in current_weather:
         activities = ["Stargazing", "Outdoor activities", "Barbecue"]
-    elif "Fog" in weather:
+    elif "Fog" in current_weather:
         activities = ["Take a walk", "Enjoy a hot drink", "Relax"]
-
-    if not activities:
+    else:
         activities = ["No activities found for this weather condition."]
 
-    return {
+    # Construct the response object
+    response = {
         'statusCode': 200,
         'body': json.dumps({
             "city": city,
             "state": state,
             "date": date,
             "time": time,
-            "short_weather": event.get('weather', ''),
-            "activities": activities
+            "short_weather": current_weather,
+            "activities": activities,
         }),
         'headers': {
             'Content-Type': 'application/json'
         }
     }
+
+    return response

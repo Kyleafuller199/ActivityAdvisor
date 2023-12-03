@@ -1,25 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Details</title>
-    <style>
-    </style>
+    <title>Weather Forecast</title>
 </head>
 <body>
-    <h1>Weather Details</h1>
+    <h1>Weather Forecast</h1>
     <p>City: {{ data.city }}</p>
     <p>State: {{ data.state }}</p>
     <p>Date: {{ data.date }}</p>
     <p>Time: {{ data.time }}</p>
-    <p>Short Weather: {{ data.weather }}</p>
-
-    <h2>Recommended Activities</h2>
+    <p>Weather: {{ data.short_weather }}</p>
+    <h2>Activities:</h2>
     <ul>
-        {% for activity in data.activities %}
-            <li>{{ activity }}</li>
-        {% endfor %}
+    {% for activity in data.activities %}
+        <li>{{ activity }}</li>
+    {% endfor %}
     </ul>
+    <button onclick="goBack()">Go Back</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </body>
 </html>
